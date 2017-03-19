@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
-from .models import Article
+from infiniti.models import Article
 
 # Create your views here.
 class ArticlesView(ListView):
