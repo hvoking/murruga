@@ -1,0 +1,167 @@
+{% extends 'layout.html' %}
+{% block carousel %}
+{% load static %}
+<div class="page-header"><h1>MurrugArq</h1></div>
+<p href="#contenido0" data-toggle= 'collapse' class="jumbotron">projetos arquitetonicos</p>
+<div id= 'contenido0' class="collapse">
+<div class="row">
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+
+			<div href="#contenido1" data-toggle= 'collapse' class="btn btn-primary" disabled='disabled'>projeto1
+				<div id= 'contenido1' class="collapse"><img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/2.png" %}"></div>
+			</div>
+		
+	</div>
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div href="#contenido2" data-toggle= 'collapse' class="btn btn-danger disabled">projeto2
+				<div id= 'contenido2' class="collapse"><img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/1.png" %}"></div>
+			</div>
+		
+	</div>
+	<div class="clearfix visible-md"></div>
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div href="#contenido3" data-toggle= 'collapse' class="btn btn-primary">projeto3
+				<div id= 'contenido3' class="collapse">
+
+
+
+					<div id='thecarousel' class="carousel slide" data-ride='carousel'>
+					<ol class="carousel-indicators">
+						<li data-target='#thecarousel' data-slide-to='0' class="active"></li>
+						<li data-target='#thecarousel' data-slide-to='1'></li>
+						<li data-target='#thecarousel' data-slide-to='2'></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="item active">
+							<div class="slide1"></div>
+							<div class="carousel-caption">
+								
+
+
+							</div>
+						</div>
+						<div class="item">
+							<div class="slide2"></div>
+							<div class="carousel-caption">
+								
+
+
+							</div>
+						</div>
+						<div class="item">
+							<div class="slide3"></div>
+							<div class="carousel-caption">
+								
+
+
+							</div>
+						</div>
+
+						
+
+					</div>
+
+
+					
+</div>
+
+
+</div>
+			</div>
+		
+	</div>
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div href="#contenido4" data-toggle= 'collapse' class="btn btn-default">projeto4
+				<div id= 'contenido4' class="collapse"><img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/1.png" %}"></div>
+			</div>
+		
+	</div>
+	</div>
+	
+</div>
+<p href='#contenido00' data-toggle='collapse' class="jumbotron">projetos urbanos</p>
+<div id="contenido00" class="collapse">
+<div class="row">
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div href="#contenido5" data-toggle= 'collapse' class="btn btn-info">projeto1
+				<div id= 'contenido5' class="collapse"><img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/1.png" %}"></div>
+			</div>
+		
+	</div>
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div href="#contenido6" data-toggle= 'collapse' class="btn btn-danger">projeto2
+				<div id= 'contenido6' class="collapse"><img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/2.png" %}"></div>
+			</div>
+		
+	</div>
+	<div class="clearfix visible-md"></div>
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div href="#contenido7" data-toggle= 'collapse' class="btn btn-primary">projeto3
+				<div id= 'contenido7' class="collapse"><img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/1.png" %}"></div>
+			</div>
+		
+	</div>
+	<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+			<div href="#contenido8" data-toggle= 'collapse' class="btn btn-default">projeto4
+				<div id= 'contenido8' class="collapse"><img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/3.png" %}"></div>
+			</div>
+	</div>
+
+
+</div>
+</div>
+
+{% endblock %}
+{% block content %}
+
+
+<div id='thecarousel' class="carousel slide" data-ride='carousel'>
+	<ol class="carousel-indicators">
+		<li data-target='#thecarousel' data-slide-to='0' class="active"></li>
+		<li data-target='#thecarousel' data-slide-to='1'></li>
+		<li data-target='#thecarousel' data-slide-to='2'></li>
+	</ol>
+	<div class="carousel-inner">
+		<div class="item active">
+			<div class="slide1"></div>
+			<div class="carousel-caption">
+				
+
+
+			</div>
+		</div>
+		<div class="item">
+			<div class="slide2"></div>
+			<div class="carousel-caption">
+				
+
+
+			</div>
+		</div>
+		<div class="item">
+			<div class="slide3"></div>
+			<div class="carousel-caption">
+				
+
+
+			</div>
+		</div>
+
+		
+
+
+
+	</div>
+
+
+	<a href="#thecarousel" class="left carousel-control" data-slide='prev'>
+		<span class="glyphicon glyphicon-chevron-left"></span>
+	</a>
+	<a href="#thecarousel" class="right carousel-control" data-slide='next'>
+		<span class="glyphicon glyphicon-chevron-right"></span>
+	</a>
+</div>
+
+
+{% endblock %}
+

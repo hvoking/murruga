@@ -1,0 +1,499 @@
+
+* {
+  /* Used so padding and margins fit in elements defined size */
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0; margin: 0;
+}
+
+body {
+  font-family: "PT Sans", sans-serif;
+  background: #f5f5f5;
+
+  /* Used so 1.6 em = 16pts */
+  font-size: 62.5%;
+}
+
+.wrapper {
+  font-size: 1.6em;
+  padding: 2em;
+  margin: 0 auto;
+  width: 95%;
+  background-color: white;
+}
+
+/* Navigation Bar Styling */
+
+.nav {
+  background: white;
+  width: 100%;
+  height: 43px;
+
+  /* Used so the menu drop down can be placed absolutely */
+  position: relative;
+  border: 1px solid #B2BEB5;
+}
+
+.nav li {
+  list-style: none;
+  float: left;
+  text-align: center;
+  width: 10%; /* fallback for non-calc() browsers */
+
+  /* Width divided between the 10 items on the bar */
+  width: calc(100% / 10);
+}
+
+/* Style links in nav bar */
+.nav > li > a {
+  color: #536267;
+  font-weight: bold;
+  font-size: .7em;
+  text-decoration: none;
+  line-height: 43px;
+  padding: 0 20px;
+  height: 43px;
+  text-transform: uppercase;
+}
+
+.nav > li:hover  {
+  border-right: 1px solid #B2BEB5;
+  border-left: 1px solid #B2BEB5;
+}
+
+/* On hover show the menu drop down */
+.nav > li:hover > div {
+  display: block;
+}
+
+/* Position the menu drop down relative to the nav bar */
+.nav > li > div {
+  position: absolute;
+  left: 0;
+  top: 41px;
+
+  /* Don't show unless the nav bar li is hovered */
+  display: none;
+  background: #fff;
+  padding: 10px 10px;
+  box-shadow: 2px 4px 4px rgba(0,0,0,0.4);
+
+  /* Hide anything that might be outside the div */
+  overflow: hidden;
+}
+
+/* End of Navigation Bar Styling */
+
+/* Drop Down Menu Styling */
+
+.nav-main {
+  width: 100%;
+  border: 1px solid #B2BEB5;
+}
+
+.nav-divider {
+  display: inline-block;
+  width: 1.8%;
+}
+
+.nav-focus-art {
+  display: inline-block;
+  width: 11.5%;
+  vertical-align: top;
+  text-align: center;
+}
+
+.nav-art-author, .nav-art-title {
+  display: inline-block;
+  padding: 10px 0px;
+}
+
+.nav-art-author {
+  font-size: .9em;
+  color: red;
+}
+
+.nav-art-title {
+  font-size: 1.4em;
+}
+
+.nav-art-image {
+  display: inline-block;
+}
+
+.nav-divider-2 {
+  display: inline-block;
+  width: 3.8%;
+}
+
+.nav-headlines {
+  display: inline-block;
+  width: 34.5%;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: left;
+  padding-right: 3px;
+}
+
+.nav-headline-link {
+  border-bottom: 1px solid #B2BEB5;
+  padding: 10px 0px;
+}
+
+.nav-headline-link:last-child {
+  border-width: 0px;
+}
+
+.nav-links {
+  display: inline-block;
+  width: 11.95%;
+  vertical-align: top;
+  text-align: left;
+}
+
+.nav-link { padding-bottom: 20px;}
+
+.nav-empty-cell { padding-top: 40px;}
+
+.nav-headline-link:first-child {
+  color: red;
+}
+
+.nav-link:first-child {
+  color: red;
+}
+
+/* End of Drop Down Menu Styling */
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+* {
+  /* Used so padding and margins fit in elements defined size */
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0; margin: 0;
+}
+ 
+body {
+  font-family: "PT Sans", sans-serif;
+  background: #f5f5f5;
+ 
+  /* Used so 1.6 em = 16pts */
+  font-size: 62.5%;
+}
+ 
+.wrapper {
+  font-size: 1.6em;
+  padding: 2em;
+  margin: 0 auto;
+  width: 95%;
+  background-color: white;
+}
+ 
+/* Navigation Bar Styling */
+ 
+.nav {
+  background: white;
+  width: 100%;
+  height: 43px;
+ 
+  /* Used so the menu drop down can be placed absolutely */
+  position: relative;
+  border: 1px solid #B2BEB5;
+}
+ 
+.nav li {
+  list-style: none;
+  float: left;
+  text-align: center;
+  width: 10%; /* fallback for non-calc() browsers */
+ 
+  /* Width divided between the 10 items on the bar */
+  width: calc(100% / 10);
+}
+ 
+/* Style links in nav bar */
+.nav > li > a {
+  color: #536267;
+  font-weight: bold;
+  font-size: .7em;
+  text-decoration: none;
+  line-height: 43px;
+  padding: 0 20px;
+  height: 43px;
+  text-transform: uppercase;
+}
+ 
+.nav > li:hover  {
+  border-right: 1px solid #B2BEB5;
+  border-left: 1px solid #B2BEB5;
+}
+ 
+/* On hover show the menu drop down */
+.nav > li:hover > div {
+  display: block;
+}
+ 
+/* Position the menu drop down relative to the nav bar */
+.nav > li > div {
+  position: absolute;
+  left: 0;
+  top: 41px;
+ 
+  /* Don't show unless the nav bar li is hovered */
+  display: none;
+  background: #fff;
+  padding: 10px 10px;
+  box-shadow: 2px 4px 4px rgba(0,0,0,0.4);
+ 
+  /* Hide anything that might be outside the div */
+  overflow: hidden;
+}
+ 
+/* End of Navigation Bar Styling */
+ 
+/* Drop Down Menu Styling */
+ 
+.nav-main {
+  width: 100%;
+  border: 1px solid #B2BEB5;
+}
+ 
+.nav-divider {
+  display: inline-block;
+  width: 1.8%;
+}
+ 
+.nav-focus-art {
+  display: inline-block;
+  width: 11.5%;
+  vertical-align: top;
+  text-align: center;
+}
+ 
+.nav-art-author, .nav-art-title {
+  display: inline-block;
+  padding: 10px 0px;
+}
+ 
+.nav-art-author {
+  font-size: .9em;
+  color: red;
+}
+ 
+.nav-art-title {
+  font-size: 1.4em;
+}
+ 
+.nav-art-image {
+  display: inline-block;
+}
+ 
+.nav-divider-2 {
+  display: inline-block;
+  width: 3.8%;
+}
+ 
+.nav-headlines {
+  display: inline-block;
+  width: 34.5%;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: left;
+  padding-right: 3px;
+}
+ 
+.nav-headline-link {
+  border-bottom: 1px solid #B2BEB5;
+  padding: 10px 0px;
+}
+ 
+.nav-headline-link:last-child {
+  border-width: 0px;
+}
+ 
+.nav-links {
+  display: inline-block;
+  width: 11.95%;
+  vertical-align: top;
+  text-align: left;
+}
+ 
+.nav-link { padding-bottom: 20px;}
+ 
+.nav-empty-cell { padding-top: 40px;}
+ 
+.nav-headline-link:first-child {
+  color: red;
+}
+ 
+.nav-link:first-child {
+  color: red;
+}
+ 
+/* End of Drop Down Menu Styling */

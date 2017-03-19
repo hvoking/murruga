@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  <title>Portafolio</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="http://code.vostrel.cz/jquery.reel.js" ></script>
+ 
+<!-- Use downloaded version of Bootstrap -->
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"> 
+<link rel="stylesheet" href="{% static 'css/leaflet.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/qgis2web.css' %}">
+<link rel="stylesheet" href="{% static 'css/MarkerCluster.css' %}" />
+<link rel="stylesheet" href="{% static 'css/MarkerCluster.Default.css' %}" />
+<link rel="stylesheet" href="{% static 'css/leaflet.draw.css' %}" />
+<link rel="stylesheet" href="{% static 'css/leaflet.measurecontrol.css' %}" />
+<script src="{% static 'js/bootstrap.min.js' %}"></script> 
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
+<script type="text/javascript"></script>
+<style>
+
+#map {
+            width: screen;
+            height: 400px;
+            
+        }
+.page-header {
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+}
+
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0; margin: 0;
+}
+.container {
+	background-image: url('{% static "imagens/2.png" %}');
+	background-size: 100%;
+	padding-bottom: 10px;
+}
+
+.row {
+	margin-top: 10px;
+}
+	.jumbotron {
+		font-family: Verdana;
+		font-variant: small-caps;
+		margin-top: 4px;
+		padding: 2px;
+		text-shadow: 2px 2px 3px gray;
+		text-align: center;
+		box-shadow: 2px 2px 3px gray;
+		text-decoration: none;
+		font-size: 20px;
+		color: black;
+	}
+	.btn {
+		
+		font-variant: small-caps;
+		width: 100%;
+		white-space: normal;
+		margin-bottom: 20px;
+	}
+
+	.links {
+		display: inline-block;
+		width: 100%;
+		font-variant: bold;
+		text-align: center;
+		font-family: verdana;
+		font-size: 1.2em;
+		background-color: white;
+		bottom: 0;
+
+	}
+
+	.links a{
+		list-style: none;
+ 		 float: left;
+  		text-align: center;
+  		width: calc(100% / 6);
+	}
+	.links > a:hover > div {
+ 		 display: block;
+  		background-color: rgba(0, 0, 0, 0.7);
+	}
+	.navbar {
+      background: rgba(76, 175, 200, 1);
+  		text-align: center;
+  		border: 2px solid black;
+  		font-style: small-caps;
+  		padding: 0.2px;
+	}
+	
+ 
+/* Position the menu drop down relative to the nav bar */
+	.links > li > div {
+
+  		position: absolute;
+  		left: 0;
+  		top: 41px;
+  		display: none;
+  		background: #fff;
+  		padding: 10px 10px;
+  		box-shadow: 2px 4px 4px rgba(0,0,7,0.4);
+  		overflow: hidden;
+	}
+.slide1{
+  background-image: url('{% static "imagens/1.png" %}');
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  -webkit-animation: backgroundScroll 10s linear infinite;
+  animation: backgroundScroll 10s linear infinite;
+}
+
+
+.slide2{
+  background-image: url('{% static "imagens/2.png" %}');
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  -webkit-animation: backgroundScroll 10s linear infinite;
+  animation: backgroundScroll 10s linear infinite;
+
+}
+ 
+.slide3{
+  background-image: url('{% static "imagens/3.png" %}');
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  -webkit-animation: backgroundScroll 10s linear infinite;
+  animation: backgroundScroll 10s linear infinite;
+}
+.carousel-caption h1{
+  font-size: 5.4em;
+  font-family: 'Pacifico', cursive;
+  padding-bottom: .4em;
+  text-shadow: 3px 3px 5px black;
+  -webkit-animation: textScroll 10s linear infinite;
+  animation: textScroll 10s linear infinite;
+}
+.carousel-caption p{
+  font-size: 2em;
+}
+
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0; margin: 0;
+}
+
+.infinite-item, .loading {
+  margin-bottom: 5px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 25px 0;
+  border-color: white;
+  border: 2px solid white;
+  word-wrap: break-word;
+}
+
+.infinite-item:hover{
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.loading {
+  background-color: #333;
+}
+
+</style>
+<head>
+	<title>mapas</title>
+</head>
+<body>
+
+
+
+
+<div class="container">
+
+{% block carousel %}{% endblock %}
+{% block content %}{% endblock %}
+{% block infiniti %}{% endblock %}
+
+
+
+<a href="/blog"><h3>blog</h3></a>
+<a href="/home" class="navbar navbar-fixed-bottom"><h3>Trabalhos MurrugArq</h3></a>
+</div>
+
+{% block javascript %}{% endblock %}
+
+
+</body>
+</html>
+
