@@ -5,3 +5,4 @@ class Article(models.Model):
     body = models.TextField(max_length=2000)
     date = models.DateTimeField()
     author = models.CharField(max_length=30)
+
