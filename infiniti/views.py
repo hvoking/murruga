@@ -12,5 +12,5 @@ class ArticlesView(ListView):
 
 def generate_fake_data(request):
     from model_mommy import mommy
-    mommy.make('blog.Article', _quantity=20)
-    return redirect('blog')
+    mommy.make('infiniti.Article', _quantity=20)
+    return redirect('infiniti')
