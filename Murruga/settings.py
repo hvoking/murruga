@@ -12,11 +12,11 @@ SECRET_KEY = 'ybkok06ea_amqfs37iik&fkqbhtylf$g6@-=jsxfl@7a#(ac(r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-#DEBUG = False
-#ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 
-DEBUG = True
-ALLOWED_HOSTS = []
+#DEBUG = True
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,13 +46,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Murruga.urls'
 
-#TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates') 
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates') 
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #'DIRS': [TEMPLATE_PATH],
-        'DIRS': ['templates/'],
+        'DIRS': [TEMPLATE_PATH],
+        #'DIRS': ['templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
