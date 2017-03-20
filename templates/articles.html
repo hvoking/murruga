@@ -15,7 +15,7 @@
   </script>
 {% endblock %}
 
-{% load static %}
+
 {% block infiniti %}
   <div class="infinite-container">
     {% for article in articles %}
@@ -23,7 +23,6 @@
         <h3>{{ article.title }}</h3>
         <p>
           <small>{{ article.author }} / {{ article.date }}</small>
-          <img  class= 'col-lg-12 col-md-12 col-sm-12 col-xs-12'src="{% static "imagens/2.png" %}">
         </p>
         <p>{{ article.body|truncatechars:100 }}</p>
       </div>
