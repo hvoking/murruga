@@ -21,7 +21,8 @@
 <link rel="stylesheet" href="{% static 'css/MarkerCluster.Default.css' %}" />
 <link rel="stylesheet" href="{% static 'css/leaflet.draw.css' %}" />
 <link rel="stylesheet" href="{% static 'css/leaflet.measurecontrol.css' %}" />
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/L.Control.Locate.min.css' %}" /> 
 <script src="{% static 'js/bootstrap.min.js' %}"></script> 
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
@@ -61,18 +62,23 @@
     </script>
 <style>
 
+html{
+  height: 100%;
+}
 
-
-
-  #map {
-            width: cover;
-            height: 500px;
-         
+#map {
+    width: cover;
+    height: 400px;
+    margin-bottom: 20px;
         }
 
 .page-header {
-	
-  height: 25px;
+    font-variant: small-caps;
+    margin-top: 0px;
+    padding: 1px;
+    background-color: rgba(223, 555, 333, 0.2);
+    text-align: center;
+ 
 }
 
 * {
@@ -83,12 +89,10 @@
 }
 .container {
 	background-image: url('{% static "imagens/2.png" %}');
-	padding-bottom: 10px;
+  background-size: 100%;
 }
 
-.row {
-	margin-top: 10px;
-}
+
 	.jumbotron {
 		font-variant: small-caps;
 		margin-top: 4px;
@@ -106,6 +110,8 @@
 		width: 100%;
 		white-space: normal;
 		margin-bottom: 20px;
+    color: rgba(299, 333, 211, 0.8);
+    text-shadow: 2px 2px 3px black;
 	}
 
       #carousel div {
@@ -138,31 +144,6 @@
       }
 
 
-	.navbar {
-      background: rgba(76, 175, 200, 1);
-  		text-align: center;
-  		border: 2px solid black;
-  		font-style: small-caps;
-  		padding: 0.2px;
-	}
-	
-  .navbar:hover{
-    background: rgba(100, 250, 200, 0.8);
-  }
-
- 
-/* Position the menu drop down relative to the nav bar */
-	.links > li > div {
-
-  		position: absolute;
-  		left: 0;
-  		top: 41px;
-  		display: none;
-  		background: #fff;
-  		padding: 10px 10px;
-  		box-shadow: 2px 4px 4px rgba(0,0,7,0.4);
-  		overflow: hidden;
-	}
 .slide1{
   background-image: url('{% static "imagens/1.png" %}');
   height: 200px;
@@ -205,12 +186,6 @@
   font-size: 2em;
 }
 
-* {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0; margin: 0;
-}
 
 .infinite-item, .loading {
   margin-top: 20px;
@@ -233,20 +208,35 @@
   background-color: #333;
 }
 body { padding-bottom: 70px; }
+
+.link {
+  text-decoration: none;
+  
+  text-shadow: 2px 2px 3px black;
+
+  font-size: 22px;
+  color: rgba(23, 555, 333, 1);
+  
+}
+.navbar{
+  border: 2px solid black;
+}
 </style>
 <head>
 	<title>mapas</title>
 </head>
 <body>
-<a href="/home" class="navbar navbar-fixed-top container"><h3>Prueba de diferentes tecnicas, click en todos los botones</h3></a>
+
 <div class="container">
-<div class="page-header"></div>
+<div class="page-header"><a class="link" href="/">MurrugArq</a></div>
 
 {% block carousel %}{% endblock %}
 {% block mapa %}{% endblock %}
 {% block infiniti %}{% endblock %}
 
 <a href="/blog"><h3 class="jumbotron">click aqui para redireccionar para otra pagina</h3></a>
+
+
 <div class="navbar navbar-fixed-bottom">
   
       <div id="carousel">
@@ -301,6 +291,8 @@ body { padding-bottom: 70px; }
       </div>
     
   </div>
+
+  <a class="btn btn-lg btn-link" href="/maps"><p>Link to maps</p></a>
 
 </div>
 
