@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'blog',
     'infiniti',
+    'geo',
 ]
 
 MIDDLEWARE = [

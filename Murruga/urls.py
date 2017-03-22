@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^$', views.inspiration, name='inspiration'),
     url(r'', include('blog.urls')),
     url(r'', include('infiniti.urls')),
+    url(r'', include('geo.urls')),
     
 
 ]
