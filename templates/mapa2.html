@@ -1,0 +1,211 @@
+{% extends 'layout.html' %}
+
+{% block mapa %}
+{% load static %}
+
+    <body>
+        <div id="map">
+        </div>
+
+        <script src="{% static 'js/qgis2web_expressions.js' %}"></script>
+        <script src="{% static 'js/leaflet.js' %}"></script>
+        <script src="{% static 'js/leaflet-heat.js' %}"></script>
+        <script src="{% static 'js/leaflet.rotatedMarker.js' %}"></script>
+        <script src="{% static 'js/OSMBuildings-Leaflet.js' %}"></script>
+        <script src="{% static 'js/leaflet-hash.js' %}"></script>
+        <script src="{% static 'js/Autolinker.min.js' %}"></script>
+        <script src="{% static 'js/Control.OSMGeocoder.js' %}"></script>
+        <script src="{% static 'js/leaflet.draw.js' %}"></script>
+        <script src="{% static 'js/leaflet.measurecontrol.js' %}"></script>
+        <script src="{% static 'js/leaflet.markercluster.js' %}"></script>
+        <script src="{% static 'js/leaflet-search.js' %}"></script>
+        <script src="{% static 'data/ViasBlumenau1.js' %}"></script>
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:17, minZoom:11
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var bounds_group = new L.featureGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }
+
+        function pop_ViasBlumenau1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Categoria=</th>\
+                        <td>' + (feature.properties['fclass'] !== null ? Autolinker.link(String(feature.properties['fclass'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nome=</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_ViasBlumenau1(feature) {
+            switch(feature.properties['fclass']) {
+                case 'cycleway':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(166,123,240,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'footway':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(121,212,30,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'living_street':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(19,203,86,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'pedestrian':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(204,155,63,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'primary':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(166,43,231,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'residential':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(119,112,112,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1,
+            }
+                    break;
+                case 'secondary':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(225,131,124,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'service':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(207,98,153,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'tertiary':
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(39,79,238,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_ViasBlumenau1',
+                opacity: 1,
+                color: 'rgba(95,210,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ViasBlumenau1');
+        map.getPane('pane_ViasBlumenau1').style.zIndex = 601;
+        map.getPane('pane_ViasBlumenau1').style['mix-blend-mode'] = 'normal';
+    var layer_ViasBlumenau1 = new L.geoJson(json_ViasBlumenau1, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_ViasBlumenau1',
+        onEachFeature: pop_ViasBlumenau1,
+        style: style_ViasBlumenau1
+    });
+        bounds_group.addLayer(layer_ViasBlumenau1);
+        map.addLayer(layer_ViasBlumenau1);
+        var osmGeocoder = new L.Control.OSMGeocoder({
+            collapsed: false,
+            position: 'topright',
+            text: 'Search',
+        });
+        osmGeocoder.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Vias Blumenau<br /><table><tr><td style="text-align: center;"><img src="{% static "legend/ViasBlumenau1_cycleway0.png" %}" /></td><td>ciclovias</td></tr><tr><td style="text-align: center;"><img src="{% static "legend/ViasBlumenau1_footway1.png" %}" /></td><td>pedestres</td></tr><tr><td style="text-align: center;"><img src="{% static "legend/ViasBlumenau1_livingstreet2.png" %}" /></td><td>ruas residenciais</td></tr><tr><td style="text-align: center;"><img src=""{% static "legend/ViasBlumenau1_pedestrian4.png" %}" /></td><td>pedestres</td></tr><tr><td style="text-align: center;"><img src="{% static "legend/ViasBlumenau1_primary5.png" %}"/></td><td>vias primarias</td></tr><tr><td style="text-align: center;"><img src="{% static "legend/ViasBlumenau1_residential7.png" %}" /></td><td>residential</td></tr><tr><td style="text-align: center;"><img src="{% static "legend/ViasBlumenau1_secondary8.png" %}" /></td><td>vias secondarias</td></tr><tr><td style="text-align: center;"><img src="{% static "legend/ViasBlumenau1_service10.png" %}" /></td><td>servicio</td></tr></table>': layer_ViasBlumenau1,},{collapsed:true}).addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_ViasBlumenau1,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'fclass'}));
+        </script>
+    </body>
+
+{% endblock %}

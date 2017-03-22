@@ -29,7 +29,7 @@
 
             if (e.target.feature.geometry.type === 'LineString') {
               highlightLayer.setStyle({
-                color: '#ffff00',
+                color: 'red',
               });
             } else {
               highlightLayer.setStyle({
@@ -46,15 +46,15 @@
         });
         var map = L.map('map', {
             measureControl:true,
-            zoomControl:true, maxZoom:28, minZoom:1
+            zoomControl:true, maxZoom:15, minZoom:10
         })
         var hash = new L.Hash(map);
         map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
         'L.control.locate().addTo(map);'
         var bounds_group = new L.featureGroup([]);
-        var basemap0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-            maxZoom: 28
+        var basemap0 = L.tileLayer('http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>,&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 17
         });
         basemap0.addTo(map);
         function setBounds() {
@@ -613,7 +613,7 @@
                         });
                     }
                 },
-                mouseover: highlightFeature,
+                mouseclick: highlightFeature,
             });
             var popupContent = '<table>\
                     <tr>\
@@ -668,7 +668,7 @@
                         });
                     }
                 },
-                mouseover: highlightFeature,
+                mouseclick: highlightFeature,
             });
             var popupContent = '<table>\
                     <tr>\
@@ -951,7 +951,7 @@
         map.addControl(new L.Control.Search({
             layer: layer_dadosbairros0,
             initial: false,
-            hideMarkerOnCollapse: true,
+            hideMarkerOnCollapse: false ,
             propertyName: 'name'}));
         </script>
         </div>
