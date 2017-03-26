@@ -1068,7 +1068,7 @@ Q3D.DEMBlock.prototype = {
     this.aObjs.push(mesh);
 
     mesh = new THREE.Mesh(geom_ri, material);
-    mesh.position.x = this.plane.width / 2;
+    mesh.position.x = this.plane.width;
     mesh.rotateOnAxis(Q3D.uv.j, HALF_PI);
     layer.addObject(mesh, false);
     this.aObjs.push(mesh);
@@ -1093,10 +1093,10 @@ Q3D.DEMBlock.prototype = {
   },
 
   contains: function (x, y) {
-    var xmin = this.plane.offsetX - this.plane.width / 2,
-        xmax = this.plane.offsetX + this.plane.width / 2,
-        ymin = this.plane.offsetY - this.plane.height / 2,
-        ymax = this.plane.offsetY + this.plane.height / 2;
+    var xmin = this.plane.offsetX - this.plane.width,
+        xmax = this.plane.offsetX + this.plane.width,
+        ymin = this.plane.offsetY - this.plane.height,
+        ymax = this.plane.offsetY + this.plane.height;
     if (xmin <= x && x <= xmax && ymin <= y && y <= ymax) return true;
     return false;
   }
