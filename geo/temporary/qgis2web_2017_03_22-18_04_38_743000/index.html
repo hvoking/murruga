@@ -1,0 +1,1256 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css" />
+        <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css" />
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+        <style>
+        #map {
+            width: 896px;
+            height: 557px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-heat.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/OSMBuildings-Leaflet.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/municipiosvizinhos0.js"></script>
+        <script src="data/blumenaunavegantesfloripa1.js"></script>
+        <script src="data/dadosbairros2.js"></script>
+        <script src="data/areaurbana3.js"></script>
+        <script src="data/ViasBlumenau4.js"></script>
+        <script src="data/temorary45.js"></script>
+        <script src="data/temporary36.js"></script>
+        <script src="data/edificiosblu7.js"></script>
+        <script src="data/placesforweb8.js"></script>
+        <script src="data/temporary29.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:17, minZoom:11
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var bounds_group = new L.featureGroup([]);
+        /*
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 17
+        });
+        */
+        
+
+        var basemap0 = L.tileLayer('http://stamen-tiles-a.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            maxZoom: 17
+        });
+    
+        /*
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>',
+            maxZoom: 17
+        });
+        */
+        /*
+        var basemap0 = L.tileLayer('http://{s}.www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        */
+        basemap0.addTo(map);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }
+        function pop_municipiosvizinhos0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_municipiosvizinhos0(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NM_MUNICIP</th>\
+                        <td>' + (feature.properties['NM_MUNICIP'] !== null ? Autolinker.link(String(feature.properties['NM_MUNICIP'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_GEOCMU'] !== null ? Autolinker.link(String(feature.properties['CD_GEOCMU'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_municipiosvizinhos0() {
+            return {
+                pane: 'pane_municipiosvizinhos0',
+                opacity: 1,
+                color: 'rgba(35,27,27,0.49)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(245,124,37,0.49)',
+            }
+        }
+        map.createPane('pane_municipiosvizinhos0');
+        map.getPane('pane_municipiosvizinhos0').style.zIndex = 600;
+        map.getPane('pane_municipiosvizinhos0').style['mix-blend-mode'] = 'normal';
+    var layer_municipiosvizinhos0 = new L.geoJson(json_municipiosvizinhos0, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_municipiosvizinhos0',
+        onEachFeature: pop_municipiosvizinhos0,
+        style: style_municipiosvizinhos0
+    });
+        bounds_group.addLayer(layer_municipiosvizinhos0);
+        function pop_blumenaunavegantesfloripa1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_blumenaunavegantesfloripa1(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NM_MUNICIP</th>\
+                        <td>' + (feature.properties['NM_MUNICIP'] !== null ? Autolinker.link(String(feature.properties['NM_MUNICIP'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CD_GEOCMU'] !== null ? Autolinker.link(String(feature.properties['CD_GEOCMU'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_blumenaunavegantesfloripa1(feature) {
+            switch(feature.properties['NM_MUNICIP']) {
+                case 'BLUMENAU':
+                    return {
+                pane: 'pane_blumenaunavegantesfloripa1',
+                opacity: 1,
+                color: 'rgba(15,215,25,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(255,2,2,1.0)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_blumenaunavegantesfloripa1');
+        map.getPane('pane_blumenaunavegantesfloripa1').style.zIndex = 601;
+        map.getPane('pane_blumenaunavegantesfloripa1').style['mix-blend-mode'] = 'normal';
+    var layer_blumenaunavegantesfloripa1 = new L.geoJson(json_blumenaunavegantesfloripa1, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_blumenaunavegantesfloripa1',
+        onEachFeature: pop_blumenaunavegantesfloripa1,
+        style: style_blumenaunavegantesfloripa1
+    });
+        bounds_group.addLayer(layer_blumenaunavegantesfloripa1);
+        function pop_dadosbairros2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_dadosbairros2(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">osm_id</th>\
+                        <td>' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Area</th>\
+                        <td>' + (feature.properties['Area'] !== null ? Autolinker.link(String(feature.properties['Area'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Densidade</th>\
+                        <td>' + (feature.properties['Densidade'] !== null ? Autolinker.link(String(feature.properties['Densidade'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PopMasc</th>\
+                        <td>' + (feature.properties['PopMasc'] !== null ? Autolinker.link(String(feature.properties['PopMasc'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PopFem</th>\
+                        <td>' + (feature.properties['PopFem'] !== null ? Autolinker.link(String(feature.properties['PopFem'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">domicilios</th>\
+                        <td>' + (feature.properties['domicilios'] !== null ? Autolinker.link(String(feature.properties['domicilios'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TotalPop</th>\
+                        <td>' + (feature.properties['TotalPop'] !== null ? Autolinker.link(String(feature.properties['TotalPop'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_dadosbairros2(feature) {
+            switch(feature.properties['name']) {
+                case 'Agua Verde':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(219,16,141,0.4)',
+            }
+                    break;
+                case 'Badenfurt':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(212,111,207,0.4)',
+            }
+                    break;
+                case 'Boa Vista':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(134,129,221,0.4)',
+            }
+                    break;
+                case 'Bom Retiro':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(32,220,167,0.4)',
+            }
+                    break;
+                case 'Centro':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(65,202,209,0.4)',
+            }
+                    break;
+                case 'Da Gloria':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(201,185,63,0.4)',
+            }
+                    break;
+                case 'Do Salto':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(211,104,152,0.4)',
+            }
+                    break;
+                case 'Escola Agricola':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(42,205,105,0.4)',
+            }
+                    break;
+                case 'Fidelis':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(104,214,61,0.4)',
+            }
+                    break;
+                case 'Fortaleza':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(181,85,219,0.4)',
+            }
+                    break;
+                case 'Fortaleza Alta':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(187,223,129,0.4)',
+            }
+                    break;
+                case 'Garcia':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(176,113,228,0.4)',
+            }
+                    break;
+                case 'Itoupava Central':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(238,187,255,0.4)',
+            }
+                    break;
+                case 'Itoupava Norte':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(45,208,189,0.4)',
+            }
+                    break;
+                case 'Itoupava Seca':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(15,15,15,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(255,19,70,0.4)',
+            }
+                    break;
+                case 'Itoupavazinha':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(106,201,111,0.4)',
+            }
+                    break;
+                case 'Jardim Blumenau':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(239,122,90,0.4)',
+            }
+                    break;
+                case 'Nova Esperança':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(232,52,103,0.4)',
+            }
+                    break;
+                case 'Passo Manso':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(133,86,209,0.4)',
+            }
+                    break;
+                case 'Ponta Aguda':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(76,228,56,0.4)',
+            }
+                    break;
+                case 'Progresso':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(255,246,109,0.4)',
+            }
+                    break;
+                case 'Ribeirão Fresco':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(113,171,206,0.4)',
+            }
+                    break;
+                case 'Salto do Norte':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(235,163,74,0.4)',
+            }
+                    break;
+                case 'Salto Weissbach':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(59,76,205,0.4)',
+            }
+                    break;
+                case 'Testo Salto':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(208,177,99,0.4)',
+            }
+                    break;
+                case 'Tribess':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(226,237,14,0.4)',
+            }
+                    break;
+                case 'Valparaiso':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(205,64,57,0.4)',
+            }
+                    break;
+                case 'Velha':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(197,218,121,0.4)',
+            }
+                    break;
+                case 'Velha Central':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(117,207,48,0.4)',
+            }
+                    break;
+                case 'Velha Grande':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(207,64,226,0.4)',
+            }
+                    break;
+                case 'Victor Konder':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(15,110,225,0.4)',
+            }
+                    break;
+                case 'Vila Formosa':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(33,181,221,0.4)',
+            }
+                    break;
+                case 'Vila Itoupava':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(114,140,206,0.4)',
+            }
+                    break;
+                case 'Vila Nova':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(142,121,219,0.4)',
+            }
+                    break;
+                case 'Vorstadt':
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(88,232,119,0.4)',
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_dadosbairros2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.4)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(131,240,191,0.4)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_dadosbairros2');
+        map.getPane('pane_dadosbairros2').style.zIndex = 602;
+        map.getPane('pane_dadosbairros2').style['mix-blend-mode'] = 'normal';
+    var layer_dadosbairros2 = new L.geoJson(json_dadosbairros2, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_dadosbairros2',
+        onEachFeature: pop_dadosbairros2,
+        style: style_dadosbairros2
+    });
+        bounds_group.addLayer(layer_dadosbairros2);
+        map.addLayer(layer_dadosbairros2);
+        function pop_areaurbana3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_areaurbana3(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Area'] !== null ? Autolinker.link(String(feature.properties['Area'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Densidade'] !== null ? Autolinker.link(String(feature.properties['Densidade'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PopMasc'] !== null ? Autolinker.link(String(feature.properties['PopMasc'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PopFem'] !== null ? Autolinker.link(String(feature.properties['PopFem'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['domicilios'] !== null ? Autolinker.link(String(feature.properties['domicilios'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TotalPop'] !== null ? Autolinker.link(String(feature.properties['TotalPop'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_areaurbana3() {
+            return {
+                pane: 'pane_areaurbana3',
+                opacity: 1,
+                color: 'rgba(36,36,245,1.0)',
+                dashArray: '1,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(248,226,99,1.0)',
+            }
+        }
+        map.createPane('pane_areaurbana3');
+        map.getPane('pane_areaurbana3').style.zIndex = 603;
+        map.getPane('pane_areaurbana3').style['mix-blend-mode'] = 'normal';
+    var layer_areaurbana3 = new L.geoJson(json_areaurbana3, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_areaurbana3',
+        onEachFeature: pop_areaurbana3,
+        style: style_areaurbana3
+    });
+        bounds_group.addLayer(layer_areaurbana3);
+        function pop_ViasBlumenau4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_ViasBlumenau4(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['code'] !== null ? Autolinker.link(String(feature.properties['code'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fclass</th>\
+                        <td>' + (feature.properties['fclass'] !== null ? Autolinker.link(String(feature.properties['fclass'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ref'] !== null ? Autolinker.link(String(feature.properties['ref'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">oneway</th>\
+                        <td>' + (feature.properties['oneway'] !== null ? Autolinker.link(String(feature.properties['oneway'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">maxspeed</th>\
+                        <td>' + (feature.properties['maxspeed'] !== null ? Autolinker.link(String(feature.properties['maxspeed'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['layer'] !== null ? Autolinker.link(String(feature.properties['layer'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['bridge'] !== null ? Autolinker.link(String(feature.properties['bridge'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['tunnel'] !== null ? Autolinker.link(String(feature.properties['tunnel'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_ViasBlumenau4(feature) {
+            switch(feature.properties['fclass']) {
+                case 'primary':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(76,38,0,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 1.0,
+            }
+                    break;
+                case 'cycleway':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(170,110,142,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 1.0,
+            }
+                    break;
+                case 'footway':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(193,176,166,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'living_street':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(90,80,100,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 1.0,
+            }
+                    break;
+                case 'path':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(193,176,166,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'pedestrian':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(193,176,166,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'residential':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(165,250,183,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'secondary':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'service':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(245,124,37,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+                case 'steps':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(149,149,112,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'round',
+                weight: 1.0,
+            }
+                    break;
+                case 'tertiary':
+                    return {
+                pane: 'pane_ViasBlumenau4',
+                opacity: 1,
+                color: 'rgba(246,255,168,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ViasBlumenau4');
+        map.getPane('pane_ViasBlumenau4').style.zIndex = 604;
+        map.getPane('pane_ViasBlumenau4').style['mix-blend-mode'] = 'normal';
+    var layer_ViasBlumenau4 = new L.geoJson(json_ViasBlumenau4, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_ViasBlumenau4',
+        onEachFeature: pop_ViasBlumenau4,
+        style: style_ViasBlumenau4
+    });
+        bounds_group.addLayer(layer_ViasBlumenau4);
+        function pop_temorary45(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_temorary45(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['code'] !== null ? Autolinker.link(String(feature.properties['code'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fclass'] !== null ? Autolinker.link(String(feature.properties['fclass'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_temorary45() {
+            return {
+                pane: 'pane_temorary45',
+                opacity: 1,
+                color: 'rgba(175,179,138,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(128,165,105,1.0)',
+            }
+        }
+        map.createPane('pane_temorary45');
+        map.getPane('pane_temorary45').style.zIndex = 605;
+        map.getPane('pane_temorary45').style['mix-blend-mode'] = 'normal';
+    var layer_temorary45 = new L.geoJson(json_temorary45, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_temorary45',
+        onEachFeature: pop_temorary45,
+        style: style_temorary45
+    });
+        bounds_group.addLayer(layer_temorary45);
+        map.addLayer(layer_temorary45);
+        function pop_temporary36(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_temporary36(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['code'] !== null ? Autolinker.link(String(feature.properties['code'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fclass'] !== null ? Autolinker.link(String(feature.properties['fclass'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_temporary36() {
+            return {
+                pane: 'pane_temporary36',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,0.78431372549)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(242,46,236,0.78431372549)',
+            }
+        }
+        map.createPane('pane_temporary36');
+        map.getPane('pane_temporary36').style.zIndex = 606;
+        map.getPane('pane_temporary36').style['mix-blend-mode'] = 'normal';
+        var layer_temporary36 = new L.geoJson(json_temporary36, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_temporary36',
+            onEachFeature: pop_temporary36,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_temporary36(feature))
+            }
+        });
+        bounds_group.addLayer(layer_temporary36);
+        map.addLayer(layer_temporary36);
+        function pop_edificiosblu7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_edificiosblu7(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['code'] !== null ? Autolinker.link(String(feature.properties['code'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fclass</th>\
+                        <td>' + (feature.properties['fclass'] !== null ? Autolinker.link(String(feature.properties['fclass'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">type</th>\
+                        <td>' + (feature.properties['type'] !== null ? Autolinker.link(String(feature.properties['type'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_edificiosblu7() {
+            return {
+                pane: 'pane_edificiosblu7',
+                opacity: 1,
+                color: 'rgba(175,179,138,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 1,
+                fillColor: 'rgba(13,154,209,1.0)',
+            }
+        }
+        map.createPane('pane_edificiosblu7');
+        map.getPane('pane_edificiosblu7').style.zIndex = 607;
+        map.getPane('pane_edificiosblu7').style['mix-blend-mode'] = 'normal';
+    var layer_edificiosblu7 = new L.geoJson(json_edificiosblu7, {
+        attribution: '<a href=""></a>',
+        pane: 'pane_edificiosblu7',
+        onEachFeature: pop_edificiosblu7,
+        style: style_edificiosblu7
+    });
+        bounds_group.addLayer(layer_edificiosblu7);
+        map.addLayer(layer_edificiosblu7);
+        function pop_placesforweb8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_placesforweb8(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['code'] !== null ? Autolinker.link(String(feature.properties['code'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fclass</th>\
+                        <td>' + (feature.properties['fclass'] !== null ? Autolinker.link(String(feature.properties['fclass'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_placesforweb8() {
+            return {
+                pane: 'pane_placesforweb8',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,0.698039215686)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(140,195,226,0.698039215686)',
+            }
+        }
+        map.createPane('pane_placesforweb8');
+        map.getPane('pane_placesforweb8').style.zIndex = 608;
+        map.getPane('pane_placesforweb8').style['mix-blend-mode'] = 'normal';
+        var layer_placesforweb8 = new L.geoJson(json_placesforweb8, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_placesforweb8',
+            onEachFeature: pop_placesforweb8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_placesforweb8(feature))
+            }
+        });
+        bounds_group.addLayer(layer_placesforweb8);
+        map.addLayer(layer_placesforweb8);
+        function pop_temporary29(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    layer.setStyle(style_temporary29(feature));
+
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['osm_id'] !== null ? Autolinker.link(String(feature.properties['osm_id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['code'] !== null ? Autolinker.link(String(feature.properties['code'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">fclass</th>\
+                        <td>' + (feature.properties['fclass'] !== null ? Autolinker.link(String(feature.properties['fclass'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">population</th>\
+                        <td>' + (feature.properties['population'] !== null ? Autolinker.link(String(feature.properties['population'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">name</th>\
+                        <td>' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent);
+        }
+
+        function style_temporary29() {
+            return {
+                pane: 'pane_temporary29',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(0,0,0,0.639215686275)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fillOpacity: 1,
+                fillColor: 'rgba(16,200,34,0.639215686275)',
+            }
+        }
+        map.createPane('pane_temporary29');
+        map.getPane('pane_temporary29').style.zIndex = 609;
+        map.getPane('pane_temporary29').style['mix-blend-mode'] = 'normal';
+        var layer_temporary29 = new L.geoJson(json_temporary29, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_temporary29',
+            onEachFeature: pop_temporary29,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_temporary29(feature))
+            }
+        });
+        bounds_group.addLayer(layer_temporary29);
+        map.addLayer(layer_temporary29);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/temporary29.png" /> temporary2': layer_temporary29,'<img src="legend/placesforweb8.png" /> places for web': layer_placesforweb8,'<img src="legend/edificiosblu7.png" /> edificiosblu': layer_edificiosblu7,'<img src="legend/temporary36.png" /> temporary3': layer_temporary36,'<img src="legend/temorary45.png" /> temorary4': layer_temorary45,'Vias Blumenau<br /><table><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_primary0.png" /></td><td>primary</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_cycleway1.png" /></td><td>cycleway</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_footway2.png" /></td><td>footway</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_livingstreet3.png" /></td><td>living_street</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_path4.png" /></td><td>path</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_pedestrian5.png" /></td><td>pedestrian</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_residential6.png" /></td><td>residential</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_secondary7.png" /></td><td>secondary</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_service8.png" /></td><td>service</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_steps9.png" /></td><td>steps</td></tr><tr><td style="text-align: center;"><img src="legend/ViasBlumenau4_tertiary10.png" /></td><td>tertiary</td></tr></table>': layer_ViasBlumenau4,'<img src="legend/areaurbana3.png" /> area urbana': layer_areaurbana3,'dados bairros<br /><table><tr><td style="text-align: center;"><img src="legend/dadosbairros2_AguaVerde0.png" /></td><td>Agua Verde</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Badenfurt1.png" /></td><td>Badenfurt</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_BoaVista2.png" /></td><td>Boa Vista</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_BomRetiro3.png" /></td><td>Bom Retiro</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Centro4.png" /></td><td>Centro</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_DaGloria5.png" /></td><td>Da Gloria</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_DoSalto6.png" /></td><td>Do Salto</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_EscolaAgricola7.png" /></td><td>Escola Agricola</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Fidelis8.png" /></td><td>Fidelis</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Fortaleza9.png" /></td><td>Fortaleza</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_FortalezaAlta10.png" /></td><td>Fortaleza Alta</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Garcia11.png" /></td><td>Garcia</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_ItoupavaCentral12.png" /></td><td>Itoupava Central</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_ItoupavaNorte13.png" /></td><td>Itoupava Norte</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_ItoupavaSeca14.png" /></td><td>Itoupava Seca</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Itoupavazinha15.png" /></td><td>Itoupavazinha</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_JardimBlumenau16.png" /></td><td>Jardim Blumenau</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_NovaEsperana17.png" /></td><td>Nova Esperança</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_PassoManso18.png" /></td><td>Passo Manso</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_PontaAguda19.png" /></td><td>Ponta Aguda</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Progresso20.png" /></td><td>Progresso</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_RibeiroFresco21.png" /></td><td>Ribeirão Fresco</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_SaltodoNorte22.png" /></td><td>Salto do Norte</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_SaltoWeissbach23.png" /></td><td>Salto Weissbach</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_TestoSalto24.png" /></td><td>Testo Salto</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Tribess25.png" /></td><td>Tribess</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Valparaiso26.png" /></td><td>Valparaiso</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Velha27.png" /></td><td>Velha</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_VelhaCentral28.png" /></td><td>Velha Central</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_VelhaGrande29.png" /></td><td>Velha Grande</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_VictorKonder30.png" /></td><td>Victor Konder</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_VilaFormosa31.png" /></td><td>Vila Formosa</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_VilaItoupava32.png" /></td><td>Vila Itoupava</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_VilaNova33.png" /></td><td>Vila Nova</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_Vorstadt34.png" /></td><td>Vorstadt</td></tr><tr><td style="text-align: center;"><img src="legend/dadosbairros2_35.png" /></td><td></td></tr></table>': layer_dadosbairros2,'blumenau navegantes floripa<br /><table><tr><td style="text-align: center;"><img src="legend/blumenaunavegantesfloripa1_BLUMENAU0.png" /></td><td>BLUMENAU</td></tr></table>': layer_blumenaunavegantesfloripa1,'<img src="legend/municipiosvizinhos0.png" /> municipios vizinhos': layer_municipiosvizinhos0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>

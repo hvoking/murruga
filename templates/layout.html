@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="{% static 'css/leaflet.measurecontrol.css' %}" />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 <link rel="stylesheet" href="{% static 'css/L.Control.Locate.min.css' %}" /> 
+<link rel="stylesheet" type="text/css" href="{% static 'css/Qgis2threejs.css' %}">
 <script src="{% static 'js/bootstrap.min.js' %}"></script> 
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
@@ -60,11 +61,9 @@
 
       });
     </script>
+
 <style>
 
-html{
-  height: 100%;
-}
 
 #map {
     width: cover;
@@ -143,7 +142,6 @@ html{
         border-radius: 3px;
       }
 
-
 .slide1{
   background-image: url('{% static "imagens/1.png" %}');
   height: 200px;
@@ -207,7 +205,10 @@ html{
 .loading {
   background-color: #333;
 }
-body { padding-bottom: 70px; }
+body { 
+  padding-bottom: 70px;
+  
+}
 
 .link {
   text-decoration: none;
@@ -221,6 +222,7 @@ body { padding-bottom: 70px; }
 .navbar{
   border: 2px solid black;
 }
+
 </style>
 <head>
 	<title>mapas</title>
@@ -230,11 +232,13 @@ body { padding-bottom: 70px; }
 <div class="container">
 <div class="page-header"><a class="link" href="/">MurrugArq</a></div>
 
-{% block carousel %}{% endblock %}
-{% block mapa %}{% endblock %}
+{% block mapa3d %}{% endblock %}
+
 {% block infiniti %}{% endblock %}
+{% block content %}{% endblock %}
 
 <a href="/blog"><h3 class="jumbotron">click aqui para redireccionar para otra pagina</h3></a>
+
 
 
 <div class="navbar navbar-fixed-bottom">
@@ -292,18 +296,15 @@ body { padding-bottom: 70px; }
     
   </div>
 
+
+
   <a class="btn btn-lg btn-link" href="/maps"><p>Link to maps</p></a>
 
 </div>
 
+</body>
+
 
 {% block javascript %}{% endblock %}
-
-
-
-
-
-
-</body>
 </html>
 
