@@ -86,9 +86,9 @@
   box-sizing: border-box;
   padding: 0; margin: 0;
 }
-.container {
+.container{
 	background-image: url('{% static "imagens/2.png" %}');
-  background-size: 100%;
+  background-size: cover;
 }
 
 
@@ -234,10 +234,10 @@ body {
 
 {% block mapa3d %}{% endblock %}
 
-{% block infiniti %}{% endblock %}
+{% block mapa2 %}{% endblock %}
 {% block content %}{% endblock %}
 
-<a href="/blog"><h3 class="jumbotron">click aqui para redireccionar para otra pagina</h3></a>
+<a href="/mapa3d"><h3 class="jumbotron">Mapa 3d</h3></a>
 
 
 
@@ -295,10 +295,7 @@ body {
       </div>
     
   </div>
-
-
-
-  <a class="btn btn-lg btn-link" href="/maps"><p>Link to maps</p></a>
+  <a href="/mapa2"><h3 class="jumbotron">Link to maps</h3></a>
 
 </div>
 

@@ -1,13 +1,41 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 <head>
 <meta charset="UTF-8">
 <title>mapa4d</title>
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<link rel="stylesheet" type="text/css" href="./Qgis2threejs.css">
+<link rel="stylesheet" type="text/css" href="{% static '4d/css/Qgis2threejs.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"> 
+<link rel="stylesheet" type="text/css" href="{% static '4d/js/Qgis2threejs.js' %}">
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<style>
+
+
+.link {
+  text-decoration: none;
+  
+  text-shadow: 2px 2px 3px black;
+
+  font-size: 22px;
+  color: rgba(23, 555, 333, 1);
+  
+}
+
+.container {
+  position: relative;
+}
+
+#webgl {
+  position: absolute;
+}
+
+</style>
 </head>
 <body>
+<div class="container">
+<div class="page-header"><a class="link" href="/">MurrugArq</a></div>
 <div id="webgl"></div>
+</div>
 
 <!-- popup -->
 <div id="popup" style="display:none;">
@@ -26,9 +54,9 @@
   <div id="about">This page was made with <a href="http://www.qgis.org/" target="_blank">QGIS</a> and <a href="https://github.com/minorua/Qgis2threejs" target="_blank">Qgis2threejs</a> plugin, 
 and uses the following library:
   <ul>
-  <li>three.js <a href="http://threejs.org/" target="_blank">http://threejs.org/</a> <a href="./threejs/LICENSE" target="_blank" class="license">(LICENSE)</a></li>
-  <li>dat-gui <a href="https://code.google.com/p/dat-gui/" target="_blank">https://code.google.com/p/dat-gui/</a> <a href="./dat-gui/license.txt" target="_blank" class="license">(LICENSE)</a></li>
-  <li id="lib_proj4js" style="display: none;">Proj4js <a href="http://trac.osgeo.org/proj4js/" target="_blank">http://trac.osgeo.org/proj4js/</a> <a href="./proj4js/LICENSE.md" target="_blank" class="license">(LICENSE)</a></li>
+  <li>three.js <a href="http://threejs.org/" target="_blank">http://threejs.org/</a> <a href="{% static '4d/js/LICENSE' %}" target="_blank" class="license">(LICENSE)</a></li>
+  <li>dat-gui <a href="https://code.google.com/p/dat-gui/" target="_blank">https://code.google.com/p/dat-gui/</a> <a href="{% static '4d/js/license.txt' %}" target="_blank" class="license">(LICENSE)</a></li>
+  <li id="lib_proj4js" style="display: none;">Proj4js <a href="http://trac.osgeo.org/proj4js/" target="_blank">http://trac.osgeo.org/proj4js/</a> <a href="{% static '4d/js/LICENSE.md' %}" target="_blank" class="license">(LICENSE)</a></li>
   </ul>
   </div>
  </div>
@@ -37,14 +65,14 @@ and uses the following library:
 <!-- footer -->
 <div id="footer"></div>
 
-<script src="./threejs/three.min.js"></script>
-<script src="./Qgis2threejs.js"></script>
-<script src="./threejs/OrbitControls.js"></script>
+<script src="{% static '4d/js/three.min.js' %}"></script>
+<script src="{% static '4d/js/Qgis2threejs.js' %}"></script>
+<script src="{% static '4d/js/OrbitControls.js' %}"></script>
 <script>
 var option = Q3D.Options;
 
 </script>
-<script src="./mapa4d.js"></script>
+<script src="{% static '4d/js/mapa4d.js' %}"></script>
 <script>
 if (typeof proj4 !== "undefined") document.getElementById("lib_proj4js").style.display = "list-item";
 
@@ -60,11 +88,13 @@ app.addEventListeners();
 app.start();
 
 </script>
-<script src="./dat-gui/dat.gui.min.js"></script>
-<script src="./dat-gui_panel.js"></script>
+<script src="{% static '4d/js/dat.gui.min.js' %}"></script>
+<script src="{% static '4d/js/dat-gui_panel.js' %}"></script>
 <script>
 // initialize dat-gui panel
 Q3D.gui.init();
 </script>
+<div class="navbar navbar-fixed-bottom">MurrugArq</div>
 </body>
+
 </html>
