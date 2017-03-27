@@ -346,8 +346,8 @@ limitations:
   };
 
   app.buildDefaultCamera = function () {
-    app.camera = new THREE.PerspectiveCamera(100, app.width / app.height, 0.1, 1000);
-    app.camera.position.set(0, 0, 25);
+    app.camera = new THREE.PerspectiveCamera(200, app.width / app.height, 0.1, 1000);
+    app.camera.position.set(50, 0, 75);
   };
 
   app.currentViewUrl = function () {
