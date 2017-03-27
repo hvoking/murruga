@@ -347,7 +347,7 @@ limitations:
 
   app.buildDefaultCamera = function () {
     app.camera = new THREE.PerspectiveCamera(45, app.width / app.height, 0.1, 1000);
-    app.camera.position.set(0, 0, 75);
+    app.camera.position.set(0, 0, 25);
   };
 
   app.currentViewUrl = function () {
@@ -1812,7 +1812,7 @@ Q3D.LineLayer.prototype.build = function (parent) {
         if (debugMode) {
           obj = new THREE.Mesh(geom, materials[f.m].m);
           obj.position.set(ptM.x, ptM.y, ptM.z);
-          obj.rotation.set(rx, 0, rz, "ZXY");
+          obj.rotation.set(rx, 20, rz, "ZXY");
           group.add(obj);
         }
         else {

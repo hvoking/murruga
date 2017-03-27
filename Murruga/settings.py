@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'blog',
     'infiniti',
     'geo',
+    'particles',
 ]
 
 MIDDLEWARE = [

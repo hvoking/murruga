@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'', include('blog.urls')),
     url(r'', include('infiniti.urls')),
     url(r'', include('geo.urls')),
+    url(r'', include('particles.urls')),
     
 
 ]
