@@ -152,8 +152,8 @@ limitations:
 
     if (app.urlParams.width && app.urlParams.height) {
       // set container size
-      container.style.width = app.urlParams.width + "px";
-      container.style.height = app.urlParams.height + "px";
+      container.style.width = "200px";
+      container.style.height = "150px";
     }
 
     if (container.clientWidth && container.clientHeight) {
